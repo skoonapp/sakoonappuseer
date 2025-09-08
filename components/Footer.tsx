@@ -5,7 +5,7 @@ interface BottomNavBarProps {
   setActiveIndex: (index: number) => void;
 }
 
-// --- NEW Icon Components ---
+// --- NEW Professional Icon Set ---
 
 const HomeIcon: React.FC<{ active: boolean }> = ({ active }) => (
     <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 mb-0.5" viewBox="0 0 24 24">
@@ -73,46 +73,40 @@ const ProfileIcon: React.FC<{ active: boolean }> = ({ active }) => (
         )}
     </svg>
 );
-// --- End Icon Components ---
+// --- End Icon Set ---
 
-const NavItem: React.FC<{ icon: React.ReactNode; label: string; isActive: boolean; onClick: () => void; }> = ({ icon, label, isActive, onClick }) => {
-    const textClasses = isActive ? 'text-cyan-600 dark:text-cyan-300' : 'text-slate-500 dark:text-slate-400';
-    return (
-        <button 
-            onClick={onClick} 
-            className={`relative flex-1 flex flex-col items-center justify-center h-full transition-colors duration-300 ease-in-out pt-1`}
-            aria-label={`Go to ${label} page`}
-            aria-current={isActive ? 'page' : undefined}
-        >
-            <div className={`transition-transform duration-300 ease-in-out ${isActive ? '-translate-y-1' : ''}`}>
-                {icon}
-            </div>
-            <span className={`text-xs font-bold transition-all duration-300 ease-in-out ${textClasses} ${isActive ? 'opacity-100' : 'opacity-90'}`}>{label}</span>
-            <div className={`absolute bottom-1 h-1 rounded-full bg-gradient-to-r from-cyan-500 to-teal-400 transition-all duration-300 ease-in-out ${isActive ? 'w-6' : 'w-0'}`} aria-hidden="true"></div>
-        </button>
-    );
-};
 
 const BottomNavBar: React.FC<BottomNavBarProps> = ({ activeIndex, setActiveIndex }) => {
   const navItems = [
-    { index: 0, label: 'Home', icon: HomeIcon },
-    { index: 1, label: 'Calls', icon: CallIcon },
-    { index: 2, label: 'Chats', icon: ChatIcon },
-    { index: 3, label: 'Profile', icon: ProfileIcon },
+    { index: 0, label: 'Home', icon: HomeIcon, activeColor: 'text-cyan-600 dark:text-cyan-300' },
+    { index: 1, label: 'Calls', icon: CallIcon, activeColor: 'text-green-600 dark:text-green-400' },
+    { index: 2, label: 'Chats', icon: ChatIcon, activeColor: 'text-blue-600 dark:text-blue-400' },
+    { index: 3, label: 'Profile', icon: ProfileIcon, activeColor: 'text-purple-600 dark:text-purple-400' },
   ];
 
   return (
     <footer className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white to-cyan-50 dark:from-slate-950 dark:to-cyan-950/40 backdrop-blur-sm border-t border-cyan-100 dark:border-cyan-900/50 z-40">
       <div className="h-full flex justify-around items-center">
-        {navItems.map(item => (
-          <NavItem
-            key={item.index}
-            label={item.label}
-            isActive={activeIndex === item.index}
-            onClick={() => setActiveIndex(item.index)}
-            icon={<item.icon active={activeIndex === item.index} />}
-          />
-        ))}
+        {navItems.map(item => {
+            const isActive = activeIndex === item.index;
+            const Icon = item.icon;
+            const textClasses = isActive ? item.activeColor : 'text-slate-500 dark:text-slate-400';
+            
+            return (
+                 <button 
+                    key={item.index}
+                    onClick={() => setActiveIndex(item.index)} 
+                    className={`relative flex-1 flex flex-col items-center justify-center h-full transition-colors duration-300 ease-in-out pt-1 ${textClasses}`}
+                    aria-label={`Go to ${item.label} page`}
+                    aria-current={isActive ? 'page' : undefined}
+                >
+                    <div className={`transition-transform duration-300 ease-in-out ${isActive ? '-translate-y-1' : ''}`}>
+                       <Icon active={isActive} />
+                    </div>
+                    <span className={`text-xs font-bold transition-all duration-300 ease-in-out ${isActive ? 'opacity-100' : 'opacity-90'}`}>{item.label}</span>
+                </button>
+            )
+        })}
       </div>
     </footer>
   );
