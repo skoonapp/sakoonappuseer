@@ -5,71 +5,45 @@ interface BottomNavBarProps {
   setActiveIndex: (index: number) => void;
 }
 
-// --- NEW Professional Icon Set ---
+// --- NEW Professional Icon Set (Heroicons Style) ---
 
 const HomeIcon: React.FC<{ active: boolean }> = ({ active }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 mb-0.5" viewBox="0 0 24 24">
-        <defs>
-            <linearGradient id="homeGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#22d3ee" /> 
-                <stop offset="100%" stopColor="#0d9488" />
-            </linearGradient>
-        </defs>
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 mb-0.5" fill={active ? "currentColor" : "none"} viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
         {active ? (
-            <path fill="url(#homeGradient)" d="M12.71,2.29a1,1,0,0,0-1.42,0l-9,9a1,1,0,0,0,0,1.42A1,1,0,0,0,3,13H4v7a1,1,0,0,0,1,1H9a1,1,0,0,0,1-1V16a1,1,0,0,1,1-1h2a1,1,0,0,1,1,1v5a1,1,0,0,0,1,1h4a1,1,0,0,0,1-1V13h1a1,1,0,0,0,1-1,1,1,0,0,0-.29-.71Z"/>
+            <path d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z" /><path d="M12 5.432l8.159 8.159c.026.026.05.054.07.084v6.101a2.25 2.25 0 01-2.25 2.25H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.25a2.25 2.25 0 01-2.25-2.25v-6.101c.02-.03.044-.058.07-.084L12 5.432z" />
         ) : (
-            <path fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+            <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h7.5" />
         )}
     </svg>
 );
 
 const CallIcon: React.FC<{ active: boolean }> = ({ active }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 mb-0.5" viewBox="0 0 24 24">
-       <defs>
-            <linearGradient id="callGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#4ade80" /> 
-                <stop offset="100%" stopColor="#10b981" />
-            </linearGradient>
-        </defs>
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 mb-0.5" fill={active ? "currentColor" : "none"} viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
         {active ? (
-            <path fill="url(#callGradient)" d="M20.4,17.15a3.78,3.78,0,0,1-2.25.86,13.41,13.41,0,0,1-6.43-2.22,18.45,18.45,0,0,1-6.28-6.28A13.41,13.41,0,0,1,3,3.09,3.78,3.78,0,0,1,3.85.84,1,1,0,0,1,5.2,1.6L7.5,6.5a1,1,0,0,1-.43,1.16L5.3,9.13a13.3,13.3,0,0,0,5.57,5.57l1.47-1.77a1,1,0,0,1,1.16-.43l4.9,2.3A1,1,0,0,1,20.4,17.15Z" />
+            <path fillRule="evenodd" d="M1.5 4.5a3 3 0 013-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 01-.694 1.955l-1.293.97c-.135.101-.164.298-.083.465a7.48 7.48 0 003.429 3.429c.167.081.364.052.465-.083l.97-1.293a1.875 1.875 0 011.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 01-3 3h-2.25C6.542 22.5 1.5 17.458 1.5 9.75V4.5z" clipRule="evenodd" />
         ) : (
-            <path fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M15.05 5A5 5 0 0 1 19 8.95M15.05 1A9 9 0 0 1 23 8.94m-1 7.98v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+            <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.213-.992-.58-1.358l-3.976-3.976c-.367-.367-.842-.58-1.358-.58h-1.372a2.25 2.25 0 00-2.25 2.25v1.372c0 .516.213.992.58 1.358l3.976 3.976c.367.367.842.58 1.358.58h1.372" />
         )}
     </svg>
 );
 
 const ChatIcon: React.FC<{ active: boolean }> = ({ active }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 mb-0.5" viewBox="0 0 24 24">
-        <defs>
-            <linearGradient id="chatGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#60a5fa" />
-                <stop offset="100%" stopColor="#3b82f6" />
-            </linearGradient>
-        </defs>
+     <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 mb-0.5" fill={active ? "currentColor" : "none"} viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
         {active ? (
-            <path fill="url(#chatGradient)" d="M20,2H4A2,2,0,0,0,2,4V16a2,2,0,0,0,2,2H18l4,4V4A2,2,0,0,0,20,2ZM12,11H11a1,1,0,0,1,0-2h1a1,1,0,0,1,0,2Zm4,0H15a1,1,0,0,1,0-2h1a1,1,0,0,1,0,2ZM8,11H7A1,1,0,0,1,7,9H8a1,1,0,0,1,0,2Z" />
+            <path fillRule="evenodd" d="M4.848 2.771A49.144 49.144 0 0112 2.25c2.43 0 4.817.178 7.152.52 1.978.292 3.348 2.024 3.348 3.97v6.02c0 1.946-1.37 3.678-3.348 3.97a48.901 48.901 0 01-3.476.383.39.39 0 00-.297.17l-2.755 4.133a.75.75 0 01-1.248 0l-2.755-4.133a.39.39 0 00-.297-.17 48.9 48.9 0 01-3.476-.384c-1.978-.29-3.348-2.024-3.348-3.97V6.741c0-1.946 1.37-3.68 3.348-3.97zM6.75 8.25a.75.75 0 01.75-.75h9a.75.75 0 010 1.5h-9a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5H12a.75.75 0 000-1.5H7.5z" clipRule="evenodd" />
         ) : (
-            <path fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+            <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193l-3.72.372a3.523 3.523 0 01-1.029.223l-3.771-.03c-1.132-.01-2.096-.804-2.288-1.836a4.84 4.84 0 01-.044-.462V8.511c0-1.136.847-2.1 1.98-2.193l3.72-.372a3.523 3.523 0 011.029-.223l3.771.03c1.132.01 2.096.804 2.288 1.836.033.162.044.327.044.462zM4.5 13.5a3 3 0 00-3 3v4.5a3 3 0 003 3h4.5a3 3 0 003-3v-4.5a3 3 0 00-3-3h-4.5z" />
         )}
     </svg>
 );
 
+
 const ProfileIcon: React.FC<{ active: boolean }> = ({ active }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 mb-0.5" viewBox="0 0 24 24">
-        <defs>
-            <linearGradient id="profileGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#a855f7" />
-                <stop offset="100%" stopColor="#8b5cf6" />
-            </linearGradient>
-        </defs>
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 mb-0.5" fill={active ? "currentColor" : "none"} viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
         {active ? (
-            <path fill="url(#profileGradient)" d="M12,12A5,5,0,1,0,7,7,5,5,0,0,0,12,12Zm0,2c-2.67,0-8,1.34-8,4v2H20V18C20,15.34,14.67,14,12,14Z" />
+            <path fillRule="evenodd" d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clipRule="evenodd" />
         ) : (
-            <>
-                <path fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                <circle cx="12" cy="7" r="4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
         )}
     </svg>
 );
@@ -78,10 +52,10 @@ const ProfileIcon: React.FC<{ active: boolean }> = ({ active }) => (
 
 const BottomNavBar: React.FC<BottomNavBarProps> = ({ activeIndex, setActiveIndex }) => {
   const navItems = [
-    { index: 0, label: 'Home', icon: HomeIcon, activeColor: 'text-cyan-600 dark:text-cyan-300' },
-    { index: 1, label: 'Calls', icon: CallIcon, activeColor: 'text-green-600 dark:text-green-400' },
-    { index: 2, label: 'Chats', icon: ChatIcon, activeColor: 'text-blue-600 dark:text-blue-400' },
-    { index: 3, label: 'Profile', icon: ProfileIcon, activeColor: 'text-purple-600 dark:text-purple-400' },
+    { index: 0, label: 'Home', icon: HomeIcon, activeColor: 'text-cyan-500' },
+    { index: 1, label: 'Calls', icon: CallIcon, activeColor: 'text-green-500' },
+    { index: 2, label: 'Chats', icon: ChatIcon, activeColor: 'text-blue-500' },
+    { index: 3, label: 'Profile', icon: ProfileIcon, activeColor: 'text-purple-500' },
   ];
 
   return (
@@ -90,20 +64,20 @@ const BottomNavBar: React.FC<BottomNavBarProps> = ({ activeIndex, setActiveIndex
         {navItems.map(item => {
             const isActive = activeIndex === item.index;
             const Icon = item.icon;
-            const textClasses = isActive ? item.activeColor : 'text-slate-500 dark:text-slate-400';
+            const textClasses = isActive ? `${item.activeColor} font-bold` : 'text-slate-500 dark:text-slate-400 font-medium';
             
             return (
                  <button 
                     key={item.index}
                     onClick={() => setActiveIndex(item.index)} 
-                    className={`relative flex-1 flex flex-col items-center justify-center h-full transition-colors duration-300 ease-in-out pt-1 ${textClasses}`}
+                    className={`relative flex-1 flex flex-col items-center justify-center h-full transition-all duration-300 ease-in-out pt-1 ${textClasses}`}
                     aria-label={`Go to ${item.label} page`}
                     aria-current={isActive ? 'page' : undefined}
                 >
-                    <div className={`transition-transform duration-300 ease-in-out ${isActive ? '-translate-y-1' : ''}`}>
+                    <div className={`transition-transform duration-300 ease-in-out ${isActive ? 'scale-110 -translate-y-1' : 'scale-100'}`}>
                        <Icon active={isActive} />
                     </div>
-                    <span className={`text-xs font-bold transition-all duration-300 ease-in-out ${isActive ? 'opacity-100' : 'opacity-90'}`}>{item.label}</span>
+                    <span className={`text-xs transition-all duration-300 ease-in-out`}>{item.label}</span>
                 </button>
             )
         })}
