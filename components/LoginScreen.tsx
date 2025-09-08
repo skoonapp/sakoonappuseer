@@ -20,6 +20,22 @@ const GoogleIcon: React.FC = () => (
         <path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303c-.792 2.237-2.231 4.166-4.087 5.571l6.19 5.238C42.012 36.49 44 31.134 44 24c0-1.341-.138-2.65-.389-3.917z"></path>
     </svg>
 );
+// --- Icons for the new security batch ---
+const ShieldCheckIcon: React.FC<{ className?: string }> = ({ className }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className={className}>
+      <path fillRule="evenodd" d="M9.661 2.231a.75.75 0 01.678 0 11.947 11.947 0 007.078 2.751.75.75 0 01.715.523 12.003 12.003 0 01-7.792 11.75.75.75 0 01-.542 0A12.003 12.003 0 012 5.505a.75.75 0 01.715-.523 11.947 11.947 0 007.078-2.751zM10.47 12.14a.75.75 0 00-1.06 0l-2.25 2.25a.75.75 0 101.06 1.06L10 13.768l1.72 1.72a.75.75 0 101.06-1.06l-2.25-2.25z" clipRule="evenodd" />
+    </svg>
+);
+const TrophyIcon: React.FC<{ className?: string }> = ({ className }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className={className}>
+      <path d="M11.983 1.904a3.003 3.003 0 00-3.966 0L7.43 2.525a3 3 0 00-1.59 2.319l-.366 3.24-2.887 1.238a3 3 0 00-1.68 2.534v.373a3 3 0 001.58 2.653l2.84 1.638-.59 2.946a3 3 0 002.23 3.328l3.125.625a3 3 0 003.328-2.23l.59-2.946 2.84-1.638a3 3 0 001.58-2.653v-.373a3 3 0 00-1.68-2.534l-2.887-1.238-.366-3.24a3 3 0 00-1.59-2.319L11.983 1.904zM10 6a.75.75 0 01.75.75v.01a.75.75 0 01-1.5 0v-.01A.75.75 0 0110 6zm.354 2.646a.75.75 0 010 1.06l-2.5 2.5a.75.75 0 01-1.06-1.06L8.94 9.06a.75.75 0 011.06 0l.354.354z" />
+    </svg>
+);
+const PadlockIcon: React.FC<{ className?: string }> = ({ className }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className={className}>
+      <path fillRule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clipRule="evenodd" />
+    </svg>
+);
 // --- End Icon Components ---
 
 
@@ -240,7 +256,24 @@ const LoginScreen: React.FC = () => {
                 {renderContent()}
             </main>
             
-            <footer className="relative z-10 shrink-0 text-center text-xs text-slate-500 px-4">
+            <div className="relative z-10 w-full max-w-lg mx-auto mt-auto mb-4 px-4">
+                <div className="flex flex-wrap justify-center items-center gap-x-4 sm:gap-x-6 gap-y-2 text-slate-400 font-medium">
+                    <div className="flex items-center gap-1.5 text-xs">
+                        <ShieldCheckIcon className="w-5 h-5 text-cyan-400"/>
+                        <span className="whitespace-nowrap">Secure Checkout</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 text-xs">
+                        <TrophyIcon className="w-5 h-5 text-amber-400"/>
+                        <span className="whitespace-nowrap">Satisfaction Guaranteed</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 text-xs">
+                        <PadlockIcon className="w-5 h-5 text-slate-400"/>
+                        <span className="whitespace-nowrap">Privacy Protected</span>
+                    </div>
+                </div>
+            </div>
+
+            <footer className="relative z-10 shrink-0 text-center text-xs text-slate-500 px-4 pb-2">
                 <p>SakoonApp by Metxfitt Pvt. Ltd. | © 2025 All Rights Reserved</p>
                 <p>Contact: support@sakoonapp.com | Follow us: @SakoonApp</p>
             </footer>
