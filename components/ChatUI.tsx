@@ -190,8 +190,7 @@ const ChatUI: React.FC<ChatUIProps> = ({ session, user, onLeave }) => {
     const localMessageId = `local-${Date.now()}`;
     const textToSend = inputValue.trim();
     setInputValue('');
-    setTimeout(() => textareaRef.current?.focus(), 0);
-
+    
     const localMessage: ChatMessage = { id: localMessageId, text: textToSend, sender: { uid: user.uid, name: user.name }, timestamp: Date.now(), status: 'sending' };
     setMessages(prev => [...prev, localMessage]);
     
@@ -200,6 +199,7 @@ const ChatUI: React.FC<ChatUIProps> = ({ session, user, onLeave }) => {
             addSystemMessage("Free trial messages must be 75 characters or less.");
             setMessages(prev => prev.filter(m => m.id !== localMessageId));
             setInputValue(textToSend);
+            setTimeout(() => textareaRef.current?.focus(), 0);
             return;
         }
         try {
@@ -214,6 +214,7 @@ const ChatUI: React.FC<ChatUIProps> = ({ session, user, onLeave }) => {
             addSystemMessage(error.message || 'Failed to send free message.');
             if (error.code === 'functions/failed-precondition') setTimeout(() => handleLeave(true), 3000);
         }
+        setTimeout(() => textareaRef.current?.focus(), 0);
         return;
     }
 
@@ -230,6 +231,7 @@ const ChatUI: React.FC<ChatUIProps> = ({ session, user, onLeave }) => {
         addSystemMessage(error.message || 'Failed to send message. Please check your balance.');
         if(error.code === 'functions/failed-precondition') setTimeout(() => handleLeave(true), 3000);
     }
+    setTimeout(() => textareaRef.current?.focus(), 0);
   };
   
   const listener = session.listener;

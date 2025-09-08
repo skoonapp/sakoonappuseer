@@ -68,7 +68,7 @@ const AICompanion: React.FC<AICompanionProps> = ({ user, onClose, onNavigateToSe
     useEffect(() => {
         try {
             const ai = new GoogleGenAI({ apiKey: process.env.API_KEY! });
-            const plansToString = (plans: Plan[], type: string) => plans.map(p => `- ${p.duration} ${type}: ₹${p.price}`).join('\n');
+            const plansToString = (plans: Plan[], type: string) => plans.map(p => `- ${p.name} (${type}): ₹${p.price}`).join('\n');
             const allPlansInfo = `\n**कॉलिंग प्लान्स**\n${plansToString(CALL_PLANS, 'कॉल')}\n\n**चैट प्लान्स**\n${plansToString(CHAT_PLANS, 'चैट')}\n`;
 
             chatRef.current = ai.chats.create({
@@ -84,7 +84,7 @@ const AICompanion: React.FC<AICompanionProps> = ({ user, onClose, onNavigateToSe
     *   **Calls & Chats Tabs:** "इन टैब्स पर जाकर आप देख सकते हैं कि कौन-कौन से Listeners अभी बात करने के लिए ऑनलाइन हैं।"
     *   **Profile Tab:** "यहाँ आप अपनी प्रोफाइल देख सकते हैं, ऐप को इंस्टॉल कर सकते हैं, और हमारी नीतियां (policies) पढ़ सकते हैं।"
 4.  **Understand Plans & Tokens (Very Important):** Explain this simply.
-    *   **DT (Direct Time) Plans:** "ये खास पैक होते हैं जिनमें आपको कॉल के लिए फिक्स मिनट या चैट के लिए फिक्स मैसेज मिलते हैं। **सबसे अच्छी बात यह है कि अगर आपके पास DT प्लान है, तो ऐप हमेशा पहले उसी का इस्तेमाल करेगा।** इससे आपके पैसे बचते हैं।"
+    *   **DT (Direct Time) Plans:** "ये खास पैक होते हैं जिनमें आपको कॉल के लिए फिक्स मिनट या चैट के लिए फिक्स मैसेज मिलते हैं। **सबसे अच्छी बात यह है कि अगर आपके पास DT प्लान है, तो ऐप हमेशा पहले उसी का इस्तेमाल करेगा।** इससे आपके पैसे बचते हैं। **बहुत ज़रूरी बात: चैट प्लान में 'duration' (जैसे 5 मिनट) सिर्फ एक नाम है, असल में आपको उसमें लिखे हुए 'messages' (जैसे 8 मैसेज) मिलते हैं, मिनट नहीं।**"
     *   **MT (Money Tokens):** "ये आपके वॉलेट बैलेंस की तरह हैं। MT का इस्तेमाल तभी होता है जब आपके पास कोई DT प्लान न हो। इनका रेट है: **कॉल के लिए 2 MT प्रति मिनट** और **चैट के लिए 1 MT में 2 मैसेज**।"
     *   Here are all the available plans for your reference: ${allPlansInfo}
 5.  **Proactively Guide and Encourage:** Your main job is to help users connect with a human. If a user mentions feeling sad, lonely, depressed, or says they want to talk to a "listener" or a "girl" ("ladki"), your response should be empathetic and guide them to the services page.
