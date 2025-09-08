@@ -81,12 +81,18 @@ const ListenerCard: React.FC<ListenerCardProps> = ({ listener, onCallClick, onCh
                         onError={() => setImageError(true)}
                     />
                 )}
-                <span className={`absolute bottom-0 right-0 block h-4 w-4 rounded-full ${listener.online ? 'bg-green-400' : 'bg-slate-400'} border-2 border-white dark:border-slate-900 ring-1 ${listener.online ? 'ring-green-500' : 'ring-slate-500'}`}></span>
             </div>
             <div className="flex-grow text-left min-w-0">
               <div className="flex items-center gap-1.5">
                 <h3 className="font-bold text-slate-800 dark:text-slate-100 text-lg truncate">{listener.name}</h3>
                 <VerifiedIcon className="w-5 h-5 text-blue-500 shrink-0" />
+              </div>
+              <div className={`flex items-center gap-1.5 mt-1 ${listener.online ? 'text-green-600 dark:text-green-400' : 'text-slate-500 dark:text-slate-400'}`}>
+                <span className="relative flex h-3 w-3">
+                  {listener.online && <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>}
+                  <span className={`relative inline-flex rounded-full h-3 w-3 ${listener.online ? 'bg-green-500' : 'bg-slate-400'}`}></span>
+                </span>
+                <span className="text-sm font-semibold">{listener.online ? 'Online' : 'Offline'}</span>
               </div>
               <div className="flex items-center text-sm text-slate-500 dark:text-slate-400 mt-1 divide-x divide-slate-300 dark:divide-slate-700">
                 <span className="pr-2">{listener.rating}★ ({listener.reviewsCount})</span>
@@ -146,14 +152,21 @@ const ListenerCard: React.FC<ListenerCardProps> = ({ listener, onCallClick, onCh
                         onError={() => setImageError(true)}
                     />
                 )}
-                <span className={`absolute bottom-2 right-2 block h-5 w-5 rounded-full ${listener.online ? 'bg-green-400' : 'bg-slate-400'} border-2 border-white dark:border-slate-900 ring-1 ${listener.online ? 'ring-green-500' : 'ring-slate-500'}`}></span>
                 <div className="absolute top-0 -right-1 bg-white dark:bg-slate-900 rounded-full p-0.5">
                     <VerifiedIcon className="w-6 h-6 text-blue-500" />
                 </div>
             </div>
 
             <h3 className="font-bold text-slate-800 dark:text-slate-100 text-lg md:text-xl truncate">{listener.name}</h3>
-            <p className="text-slate-500 dark:text-slate-400 text-xs md:text-sm mb-3">{`(${listener.gender}, ${listener.age} yrs)`}</p>
+            <p className="text-slate-500 dark:text-slate-400 text-xs md:text-sm mb-2">{`(${listener.gender}, ${listener.age} yrs)`}</p>
+
+            <div className={`flex items-center justify-center gap-1.5 mb-3 text-sm font-semibold ${listener.online ? 'text-green-600 dark:text-green-400' : 'text-slate-500 dark:text-slate-400'}`}>
+                <span className="relative flex h-3 w-3">
+                    {listener.online && <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>}
+                    <span className={`relative inline-flex rounded-full h-3 w-3 ${listener.online ? 'bg-green-500' : 'bg-slate-400'}`}></span>
+                </span>
+                <span>{listener.online ? 'Online' : 'Offline'}</span>
+            </div>
 
             <div className="flex justify-center items-center text-xs md:text-sm text-center mb-4 text-slate-600 bg-slate-50 dark:bg-slate-800/50 p-2 rounded-lg divide-x divide-slate-300 dark:divide-slate-700">
                 <div className="px-3">

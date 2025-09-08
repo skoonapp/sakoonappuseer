@@ -1,8 +1,11 @@
 
+
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { defineConfig, loadEnv } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
+// FIX: Explicitly import 'process' to resolve type error for 'process.cwd()'.
+import process from 'process';
 
 // Helper to get __dirname in ES module, making paths more reliable for build servers.
 const __filename = fileURLToPath(import.meta.url);
