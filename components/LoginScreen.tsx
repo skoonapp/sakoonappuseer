@@ -243,7 +243,7 @@ const LoginScreen: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-slate-950 flex flex-col p-4 relative overflow-hidden">
+        <div className="h-screen bg-slate-950 flex flex-col p-4 relative overflow-hidden">
             <div className="absolute inset-0 z-0">
                 <div 
                     className="absolute inset-0 bg-cover bg-no-repeat opacity-20 animate-ken-burns" 
