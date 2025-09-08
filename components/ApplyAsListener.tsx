@@ -54,6 +54,7 @@ const ApplyAsListener: React.FC = () => {
   const [error, setError] = useState('');
   const [languageDropdownOpen, setLanguageDropdownOpen] = useState(false);
   const languageDropdownRef = useRef<HTMLDivElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     const user = auth.currentUser;
@@ -74,6 +75,18 @@ const ApplyAsListener: React.FC = () => {
         document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    const handleClickOutsideForm = (event: MouseEvent) => {
+        if (showForm && formRef.current && !formRef.current.contains(event.target as Node)) {
+            setShowForm(false);
+        }
+    };
+    document.addEventListener('mousedown', handleClickOutsideForm);
+    return () => {
+        document.removeEventListener('mousedown', handleClickOutsideForm);
+    };
+  }, [showForm]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -181,7 +194,7 @@ const ApplyAsListener: React.FC = () => {
 
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
       <div className="text-center">
           <p className="font-bold text-lg text-slate-700 dark:text-slate-300">Step {step} of 2</p>
           <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2.5 mt-1">

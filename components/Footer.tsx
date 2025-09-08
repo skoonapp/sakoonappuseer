@@ -80,7 +80,7 @@ const NavItem: React.FC<{ icon: React.ReactNode; label: string; isActive: boolea
     return (
         <button 
             onClick={onClick} 
-            className={`relative z-10 flex-1 flex flex-col items-center justify-center h-full transition-colors duration-300 ease-in-out`}
+            className={`relative flex-1 flex flex-col items-center justify-center h-full transition-colors duration-300 ease-in-out pt-1`}
             aria-label={`Go to ${label} page`}
             aria-current={isActive ? 'page' : undefined}
         >
@@ -88,6 +88,7 @@ const NavItem: React.FC<{ icon: React.ReactNode; label: string; isActive: boolea
                 {icon}
             </div>
             <span className={`text-xs font-bold transition-all duration-300 ease-in-out ${textClasses} ${isActive ? 'opacity-100' : 'opacity-90'}`}>{label}</span>
+            <div className={`absolute bottom-1 h-1 rounded-full bg-gradient-to-r from-cyan-500 to-teal-400 transition-all duration-300 ease-in-out ${isActive ? 'w-6' : 'w-0'}`} aria-hidden="true"></div>
         </button>
     );
 };
@@ -101,16 +102,8 @@ const BottomNavBar: React.FC<BottomNavBarProps> = ({ activeIndex, setActiveIndex
   ];
 
   return (
-    <footer className="absolute bottom-0 left-0 right-0 h-16 bg-white/70 dark:bg-slate-950/70 backdrop-blur-lg border-t border-slate-200/80 dark:border-slate-800/80 z-40">
-      <div className="relative h-full flex justify-around items-center">
-        
-        {/* Sliding Indicator */}
-        <div 
-          className="absolute top-[5px] h-[calc(100%-10px)] w-1/4 bg-cyan-100 dark:bg-cyan-500/10 rounded-full transition-transform duration-300 ease-in-out shadow-inner"
-          style={{ transform: `translateX(${activeIndex * 100}%)` }}
-          aria-hidden="true"
-        ></div>
-
+    <footer className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white to-cyan-50 dark:from-slate-950 dark:to-cyan-950/40 backdrop-blur-sm border-t border-cyan-100 dark:border-cyan-900/50 z-40">
+      <div className="h-full flex justify-around items-center">
         {navItems.map(item => (
           <NavItem
             key={item.index}
@@ -120,7 +113,6 @@ const BottomNavBar: React.FC<BottomNavBarProps> = ({ activeIndex, setActiveIndex
             icon={<item.icon active={activeIndex === item.index} />}
           />
         ))}
-
       </div>
     </footer>
   );
