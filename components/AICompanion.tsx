@@ -155,7 +155,7 @@ You have one tool available:
             ));
         } finally {
             setIsLoading(false);
-            textareaRef.current?.focus();
+            setTimeout(() => textareaRef.current?.focus(), 0);
         }
     };
 
@@ -164,6 +164,7 @@ You have one tool available:
             <div
                 className="w-full max-w-lg h-full sm:h-[95%] sm:max-h-[700px] bg-stone-100 dark:bg-slate-950 rounded-t-2xl sm:rounded-2xl shadow-xl flex flex-col overflow-hidden animate-fade-in-up"
                 onClick={e => e.stopPropagation()}
+                style={{backgroundImage: `url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png')`}}
             >
                 <header className="flex items-center justify-between p-3 bg-white dark:bg-slate-900 shadow-sm flex-shrink-0 border-b border-slate-200 dark:border-slate-800">
                     <div className="flex items-center gap-3">
@@ -183,7 +184,7 @@ You have one tool available:
                     </button>
                 </header>
         
-                <main className="flex-grow p-4 overflow-y-auto" style={{backgroundImage: `url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png')`}}>
+                <main className="flex-grow p-4 overflow-y-auto bg-transparent">
                     <div className="flex flex-col gap-2">
                         {messages.map((msg) => {
                             const isAI = msg.sender.uid === 'ai';
@@ -222,22 +223,20 @@ You have one tool available:
                     <div ref={messagesEndRef} />
                 </main>
                 
-                <footer className="p-2 bg-transparent flex-shrink-0">
-                    <form onSubmit={handleSendMessage} className="flex items-end gap-2">
-                        <div className="flex-grow min-w-0 bg-white dark:bg-slate-900 rounded-2xl flex items-end px-3 py-1 shadow-sm">
-                            <textarea
-                                ref={textareaRef}
-                                rows={1}
-                                value={inputValue}
-                                onChange={(e) => setInputValue(e.target.value)}
-                                placeholder="@SakoonApp Help से पूछें..."
-                                className="flex-grow bg-transparent p-2 focus:outline-none text-slate-900 dark:text-white resize-none max-h-28 overflow-y-auto"
-                                disabled={isLoading}
-                                onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSendMessage(e); } }}
-                            />
-                        </div>
-                        <button type="submit" disabled={isLoading || !inputValue.trim()} className="w-12 h-12 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full flex items-center justify-center transition-all transform hover:scale-110 shadow-md disabled:bg-slate-500 disabled:cursor-not-allowed disabled:scale-100 shrink-0" aria-label="Send message">
-                            <div className="relative w-6 h-6">
+                 <footer className="p-2 bg-transparent flex-shrink-0">
+                    <form onSubmit={handleSendMessage} className="flex items-end gap-2 bg-white dark:bg-slate-900 rounded-3xl p-1.5 shadow-md">
+                        <textarea
+                            ref={textareaRef}
+                            rows={1}
+                            value={inputValue}
+                            onChange={(e) => setInputValue(e.target.value)}
+                            placeholder="@SakoonApp Help से पूछें..."
+                            className="flex-grow bg-transparent focus:outline-none text-slate-900 dark:text-white resize-none max-h-24 overflow-y-auto px-3 py-1.5"
+                            disabled={isLoading}
+                            onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSendMessage(e); } }}
+                        />
+                        <button type="submit" disabled={isLoading || !inputValue.trim()} className="w-10 h-10 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full flex items-center justify-center transition-colors shadow-sm disabled:bg-slate-500 disabled:cursor-not-allowed shrink-0" aria-label="Send message">
+                            <div className="relative w-5 h-5">
                                 <MicrophoneIcon className={`absolute inset-0 w-full h-full transition-all duration-300 ${inputValue.trim() ? 'opacity-0 scale-50' : 'opacity-100 scale-100'}`} />
                                 <SendIcon className={`absolute inset-0 w-full h-full transition-all duration-300 ${inputValue.trim() ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`} />
                             </div>
