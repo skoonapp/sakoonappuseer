@@ -1,13 +1,15 @@
 
-
-
 import path from 'path';
+import { fileURLToPath } from 'url';
 import { defineConfig, loadEnv } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 
+// Helper to get __dirname in ES module, making paths more reliable for build servers.
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 export default defineConfig(({ mode }) => {
-    // FIX: Replaced process.cwd() with '.' to avoid TypeScript type error.
-    const env = loadEnv(mode, '.', '');
+    const env = loadEnv(mode, process.cwd(), '');
     return {
       plugins: [
         VitePWA({
@@ -55,9 +57,26 @@ export default defineConfig(({ mode }) => {
       },
       resolve: {
         alias: {
-          // FIX: Replaced process.cwd() with '.' to resolve from the project root.
-          '@': path.resolve('.'),
+          // FIX: Switched from '.' to a reliable __dirname to resolve paths correctly in different build environments.
+          '@': path.resolve(__dirname),
         }
       },
+      // FIX: Added build configuration to externalize dependencies that are loaded via the importmap in index.html.
+      // This explicitly tells Vite not to bundle these packages, resolving the dependency resolution error on Netlify.
+      build: {
+        rollupOptions: {
+          external: [
+            "@google/genai",
+            "firebase",
+            "react",
+            "react-dom",
+            // Match deep imports like 'firebase/auth' and 'react-dom/client'
+            /^@google\/genai.*/,
+            /^firebase\/.*/, 
+            /^react\/.*/,
+            /^react-dom\/.*/,
+          ]
+        }
+      }
     };
 });

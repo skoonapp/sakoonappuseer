@@ -13,11 +13,11 @@ admin.initializeApp();
 const db = admin.firestore();
 
 // FIX: Correctly configured the Cashfree SDK. The 'cashfree-pg' package expects
-// 'clientId', 'secretKey', and the 'isProduction' boolean for initialization.
+// 'api_key', 'api_secret', and 'env' for initialization.
 const cashfree = new Cashfree({
-    clientId: functions.config().cashfree.client_id,
-    secretKey: functions.config().cashfree.client_secret,
-    isProduction: functions.config().cashfree.env === "PROD",
+    api_key: functions.config().cashfree.client_id,
+    api_secret: functions.config().cashfree.client_secret,
+    env: functions.config().cashfree.env === "PROD" ? "production" : "sandbox",
 });
 
 const firebaseUIDtoZegoUID = (uid: string): number => {
