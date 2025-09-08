@@ -74,7 +74,7 @@ const AICompanion: React.FC<AICompanionProps> = ({ user, onClose, onNavigateToSe
             chatRef.current = ai.chats.create({
                 model: 'gemini-2.5-flash',
                 config: {
-                    systemInstruction: `You are "सकून AI दोस्त", a warm, empathetic, and expert guide for the SakoonApp. Your personality is like a caring, knowledgeable friend. Your primary goal is to make the user feel comfortable, understand how the app works, and guide them to connect with a human Listener. You are a guide, not a replacement for a Listener. Converse primarily in Hinglish (Hindi using the Roman script) or Hindi (Devanagari script), matching the user's language. Use simple, everyday words that anyone can understand. Be natural and friendly. Keep it concise.
+                    systemInstruction: `You are "@SakoonApp Help", a warm, empathetic, and expert guide for the SakoonApp. Your personality is like a caring, knowledgeable friend. Your primary goal is to make the user feel comfortable, understand how the app works, and guide them to connect with a human Listener. You are a guide, not a replacement for a Listener. Converse primarily in Hinglish (Hindi using the Roman script) or Hindi (Devanagari script), matching the user's language. Use simple, everyday words that anyone can understand. Be natural and friendly. Keep it concise.
 
 **Your Conversational Flow & Knowledge Base:**
 1.  **Warm Welcome & Empathy:** Always start by gently greeting the user and asking what's on their mind. Example: "नमस्ते, मैं आपका सकून दोस्त हूँ। कैसे हैं आप? आप चाहें तो मुझसे अपने मन की बात कह सकते हैं।"
@@ -106,8 +106,8 @@ You have one tool available:
             
             setMessages([{
                 id: `ai-welcome-${Date.now()}`,
-                text: `नमस्ते ${user.name}, मैं आपका सकून AI दोस्त हूँ। मैं इस ऐप को समझने में आपकी मदद कर सकता हूँ। आप क्या जानना चाहेंगे?`,
-                sender: { uid: 'ai', name: 'सकून दोस्त' },
+                text: `नमस्ते ${user.name}, मैं @SakoonApp Help हूँ। मैं इस ऐप को समझने में आपकी मदद कर सकता हूँ। आप क्या जानना चाहेंगे?`,
+                sender: { uid: 'ai', name: '@SakoonApp Help' },
                 timestamp: Date.now()
             }]);
 
@@ -139,7 +139,7 @@ You have one tool available:
             }
             
             if (result.text) {
-                const aiMessage: ChatMessage = { id: `ai-${Date.now()}`, text: result.text, sender: { uid: 'ai', name: 'सकून दोस्त' }, timestamp: Date.now() };
+                const aiMessage: ChatMessage = { id: `ai-${Date.now()}`, text: result.text, sender: { uid: 'ai', name: '@SakoonApp Help' }, timestamp: Date.now() };
                 setMessages(prev => [
                     ...prev.map(msg => msg.id === userMessageId ? { ...msg, status: 'read' } as ChatMessage : msg),
                     aiMessage
@@ -171,7 +171,7 @@ You have one tool available:
                             <RobotIcon className="w-6 h-6 text-white" />
                         </div>
                         <div>
-                            <h2 className="font-bold text-lg text-slate-800 dark:text-slate-100">सकून AI दोस्त</h2>
+                            <h2 className="font-bold text-lg text-slate-800 dark:text-slate-100">@SakoonApp Help</h2>
                             <p className="text-sm text-slate-500 dark:text-slate-400">आपका सहायक गाइड</p>
                         </div>
                     </div>
@@ -230,7 +230,7 @@ You have one tool available:
                                 rows={1}
                                 value={inputValue}
                                 onChange={(e) => setInputValue(e.target.value)}
-                                placeholder="सकून दोस्त से पूछें..."
+                                placeholder="@SakoonApp Help से पूछें..."
                                 className="flex-grow bg-transparent p-2 focus:outline-none text-slate-900 dark:text-white resize-none max-h-28 overflow-y-auto"
                                 disabled={isLoading}
                                 onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSendMessage(e); } }}

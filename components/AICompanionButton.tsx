@@ -1,4 +1,5 @@
 
+
 import React from 'react';
 
 interface AICompanionButtonProps {
@@ -17,7 +18,7 @@ const AICompanionButton: React.FC<AICompanionButtonProps> = ({ onClick }) => {
         <button
             onClick={onClick}
             className="fixed bottom-24 right-6 z-30 bg-gradient-to-br from-purple-600 to-indigo-700 text-white w-16 h-16 rounded-full shadow-2xl flex items-center justify-center transform hover:scale-110 transition-all duration-300 animate-pulse-slow focus:outline-none focus:ring-4 focus:ring-purple-400"
-            aria-label="सकून AI दोस्त से बात करें"
+            aria-label="@SakoonApp Help से बात करें"
         >
             <AICompanionIcon className="w-8 h-8"/>
             <span className="absolute -top-3 -right-3 flex h-5 w-5">

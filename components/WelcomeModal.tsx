@@ -128,7 +128,7 @@ const WelcomeModal: React.FC<WelcomeModalProps> = ({ user, onClose, onShowTerms,
                         <RobotIcon className="w-6 h-6 text-purple-500"/>
                     </div>
                     <div>
-                        <h3 className="font-bold text-slate-700 dark:text-slate-200">5. AI दोस्त से पूछें</h3>
+                        <h3 className="font-bold text-slate-700 dark:text-slate-200">5. @SakoonApp Help से पूछें</h3>
                         <p className="text-sm text-slate-500 dark:text-slate-400">कोई सवाल है? नीचे AI बटन पर क्लिक करें।</p>
                     </div>
                 </li>
