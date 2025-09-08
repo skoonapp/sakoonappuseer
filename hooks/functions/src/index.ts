@@ -12,12 +12,12 @@ import * as crypto from "crypto";
 admin.initializeApp();
 const db = admin.firestore();
 
-// FIX: Correctly configure the Cashfree SDK by creating an instance with credentials.
-// This replaces the deprecated static property assignments which caused the errors.
+// FIX: Correctly configured the Cashfree SDK. The 'cashfree-pg' package expects
+// 'clientId', 'secretKey', and the 'isProduction' boolean for initialization.
 const cashfree = new Cashfree({
-    api_key: functions.config().cashfree.client_id,
-    api_secret: functions.config().cashfree.client_secret,
-    env: functions.config().cashfree.env === "PROD" ? "PROD" : "SANDBOX",
+    clientId: functions.config().cashfree.client_id,
+    secretKey: functions.config().cashfree.client_secret,
+    isProduction: functions.config().cashfree.env === "PROD",
 });
 
 const firebaseUIDtoZegoUID = (uid: string): number => {
@@ -144,9 +144,10 @@ export const createCashfreeOrder = functions.https.onCall(async (data, context) 
   };
 
   try {
-    // FIX: Updated the API call to use the cashfree instance and `pg.orders.create` method to match the modern SDK.
-    const response = await cashfree.pg.orders.create(orderRequest);
-    return { success: true, paymentSessionId: response.data.payment_session_id };
+    // FIX: Updated the API call to use 'cashfree.orders.create' which is the correct
+    // method for the 'cashfree-pg' SDK, and accessed the session ID directly from the response.
+    const response = await cashfree.orders.create(orderRequest);
+    return { success: true, paymentSessionId: response.payment_session_id };
   } catch (error: any) {
     console.error("Cashfree order creation failed:", error.response?.data || error.message);
     throw new functions.https.HttpsError("internal", "Failed to create payment order.");
