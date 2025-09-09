@@ -60,7 +60,6 @@ const App: React.FC = () => {
     const [showAICompanion, setShowAICompanion] = useState(false);
     const [showPolicy, setShowPolicy] = useState<'terms' | 'privacy' | 'cancellation' | null>(null);
     const [showRechargeModal, setShowRechargeModal] = useState(false);
-    const [showWelcomeModal, setShowWelcomeModal] = useState(false);
     const [showWallet, setShowWallet] = useState(false);
     const [initialWalletTab, setInitialWalletTab] = useState<'recharge' | 'usage'>('recharge');
 
@@ -138,14 +137,10 @@ const App: React.FC = () => {
                     if (doc.exists) {
                         const userData = doc.data() as User;
                         setUser(userData);
-                        if (userData.hasSeenWelcome === false || userData.hasSeenWelcome === undefined) {
-                            setShowWelcomeModal(true);
-                        }
                     } else {
                         const newUser: User = { uid: firebaseUser.uid, name: firebaseUser.displayName || 'New User', email: firebaseUser.email, mobile: firebaseUser.phoneNumber || '', favoriteListeners: [], tokens: 0, activePlans: [], freeMessagesRemaining: 5, hasSeenWelcome: false };
                         userDocRef.set(newUser, { merge: true });
                         setUser(newUser);
-                        setShowWelcomeModal(true);
                     }
                     setIsInitializing(false);
                 }, error => {
@@ -223,6 +218,25 @@ const App: React.FC = () => {
 
     // --- Handlers ---
     
+    const handleInstallClick = useCallback(() => {
+        if (deferredInstallPrompt) {
+            deferredInstallPrompt.prompt();
+            deferredInstallPrompt.userChoice.then(() => {
+                setDeferredInstallPrompt(null);
+                setShowInstallBanner(false);
+            });
+        }
+    }, [deferredInstallPrompt]);
+    
+    const handleOnboardingComplete = useCallback(() => {
+        // This is called when the welcome form is submitted.
+        // The user object update will trigger a re-render to show the main app.
+        // We trigger the install prompt here if it's available.
+        if (deferredInstallPrompt) {
+            handleInstallClick();
+        }
+    }, [deferredInstallPrompt, handleInstallClick]);
+    
     // Main navigation handler for clicks, swipes, and history
     const navigateTo = useCallback((newIndex: number) => {
         const currentIndex = activeIndex;
@@ -268,16 +282,6 @@ const App: React.FC = () => {
         setTouchEndX(0);
     };
     
-    const handleInstallClick = useCallback(() => {
-        if (deferredInstallPrompt) {
-            deferredInstallPrompt.prompt();
-            deferredInstallPrompt.userChoice.then(() => {
-                setDeferredInstallPrompt(null);
-                setShowInstallBanner(false);
-            });
-        }
-    }, [deferredInstallPrompt]);
-
     const handleInstallDismiss = () => {
         const expiry = new Date().getTime() + 7 * 24 * 60 * 60 * 1000;
         localStorage.setItem('pwaInstallDismissed', 'true');
@@ -301,14 +305,6 @@ const App: React.FC = () => {
     
     const handleLogout = useCallback(() => auth.signOut(), []);
     
-    const handleCloseWelcomeModal = useCallback(() => {
-        setShowWelcomeModal(false);
-        // Trigger install prompt after welcome is closed, as before.
-        if (deferredInstallPrompt) {
-            handleInstallClick();
-        }
-    }, [deferredInstallPrompt, handleInstallClick]);
-
     const handleStartSession = useCallback((type: 'call' | 'chat', listener: Listener) => {
         if (type === 'chat' && user && (user.freeMessagesRemaining || 0) > 0) {
             setActiveChatSession({ type: 'chat', listener, plan: { duration: 'Free Trial', price: 0 }, sessionDurationSeconds: 3 * 3600, associatedPlanId: `free_trial_${user.uid}`, isTokenSession: false, isFreeTrial: true });
@@ -413,6 +409,24 @@ const App: React.FC = () => {
     
     if (isInitializing || wallet.loading) return <SplashScreen />;
     if (!user) return <LoginScreen />;
+
+    // NEW: Enforce mandatory onboarding flow
+    const needsOnboarding = user.hasSeenWelcome === false || user.hasSeenWelcome === undefined;
+    if (needsOnboarding) {
+        return (
+            <div className="w-full max-w-md mx-auto bg-slate-100 dark:bg-slate-950 h-screen overflow-hidden">
+                <WelcomeModal 
+                    user={user} 
+                    onClose={handleOnboardingComplete} 
+                    onShowTerms={() => setShowPolicy('terms')}
+                    onShowPrivacyPolicy={() => setShowPolicy('privacy')}
+                />
+                {showPolicy === 'terms' && <TermsAndConditions onClose={() => setShowPolicy(null)} />}
+                {showPolicy === 'privacy' && <PrivacyPolicy onClose={() => setShowPolicy(null)} />}
+            </div>
+        );
+    }
+    
     if (activeCallSession) return <CallUI session={activeCallSession} user={user} onLeave={handleCallSessionEnd} />;
     if (activeChatSession) return <ChatUI session={activeChatSession} user={user} onLeave={handleChatSessionEnd} />;
     
@@ -492,14 +506,6 @@ const App: React.FC = () => {
             <Footer activeIndex={activeIndex} setActiveIndex={navigateTo} />
             
             {/* --- Modals and Overlays --- */}
-            {showWelcomeModal && user && (
-                <WelcomeModal 
-                    user={user} 
-                    onClose={handleCloseWelcomeModal} 
-                    onShowTerms={() => setShowPolicy('terms')}
-                    onShowPrivacyPolicy={() => setShowPolicy('privacy')}
-                />
-            )}
             {showInstallBanner && (
                 <div className="fixed bottom-20 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-md z-40 animate-fade-in-up">
                     <button onClick={handleInstallClick} className="w-full text-left bg-gradient-to-r from-cyan-600 to-teal-500 rounded-xl shadow-2xl p-2.5 flex items-center gap-3 text-white relative transition-transform hover:scale-105">
