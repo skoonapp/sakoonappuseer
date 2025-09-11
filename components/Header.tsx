@@ -2,8 +2,6 @@ import React from 'react';
 import type { useWallet } from '../hooks/useWallet';
 
 interface HeaderProps {
-  isDarkMode: boolean;
-  toggleDarkMode: () => void;
   wallet: ReturnType<typeof useWallet>;
 }
 
@@ -43,7 +41,7 @@ const ChatIcon: React.FC<{ className?: string }> = ({ className }) => (
 // --- End Icons ---
 
 
-const Header: React.FC<HeaderProps> = ({ isDarkMode, toggleDarkMode, wallet }) => {
+const Header: React.FC<HeaderProps> = ({ wallet }) => {
   const now = Date.now();
   const activePlans = (wallet.activePlans || []).filter(p => p.expiryTimestamp > now);
 
@@ -94,14 +92,6 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode, toggleDarkMode, wallet }) =
                 </div>
             </div>
             
-            {/* Dark Mode Toggle */}
-             <button
-                onClick={toggleDarkMode}
-                className="w-10 h-10 flex items-center justify-center bg-white/60 dark:bg-slate-900/60 backdrop-blur-sm border border-slate-300 dark:border-slate-700 rounded-full shadow-md text-slate-600 dark:text-amber-400 hover:shadow-lg hover:border-cyan-400 dark:hover:border-cyan-500 transition-all duration-300 shrink-0"
-                aria-label={isDarkMode ? "लाइट मोड" : "डार्क मोड"}
-            >
-                {isDarkMode ? <SunIcon className="w-6 h-6"/> : <MoonIcon className="w-6 h-6"/>}
-            </button>
         </div>
       </div>
     </header>

@@ -447,16 +447,14 @@ const App: React.FC = () => {
             deferredPrompt={deferredInstallPrompt}
             onInstallClick={handleInstallClick}
             onLogout={handleLogout}
+            isDarkMode={isDarkMode}
+            toggleDarkMode={toggleDarkMode}
         />
     ];
 
     return (
         <div className="relative w-full max-w-md mx-auto bg-slate-100 dark:bg-slate-950 flex flex-col h-screen shadow-2xl transition-colors duration-300 overflow-hidden">
-            <Header 
-                isDarkMode={isDarkMode} 
-                toggleDarkMode={toggleDarkMode} 
-                wallet={wallet}
-            />
+            <Header wallet={wallet} />
             
             {feedback && (
                 <div className={`fixed top-16 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-md z-40 p-3 rounded-lg text-center font-semibold animate-fade-in-down ${feedback.type === 'success' ? 'bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300' : 'bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-300'}`}>

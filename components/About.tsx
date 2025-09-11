@@ -13,9 +13,21 @@ interface ProfileViewProps {
   deferredPrompt: any; // The event from beforeinstallprompt
   onInstallClick: () => void;
   onLogout: () => void;
+  isDarkMode: boolean;
+  toggleDarkMode: () => void;
 }
 
 // --- Icons ---
+const SunIcon: React.FC<{ className?: string }> = ({ className }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+    </svg>
+);
+const MoonIcon: React.FC<{ className?: string }> = ({ className }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+    </svg>
+);
 const InstallIcon: React.FC<{ className?: string }> = ({ className }) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}>
         <path d="M12 1.5a.75.75 0 01.75.75V12h-1.5V2.25A.75.75 0 0112 1.5z" />
@@ -39,6 +51,8 @@ const ProfileView: React.FC<ProfileViewProps> = ({
   deferredPrompt,
   onInstallClick,
   onLogout,
+  isDarkMode,
+  toggleDarkMode,
 }) => {
   const [openAccordion, setOpenAccordion] = useState<'faq' | 'contact' | null>(null);
 
@@ -126,13 +140,21 @@ const ProfileView: React.FC<ProfileViewProps> = ({
             </div>
             
             <div className="p-6 text-center">
-              <div className="flex justify-center items-center">
+              <div className="flex justify-center items-center gap-4">
                   <button
                       onClick={onLogout}
                       className="flex items-center gap-2 bg-gradient-to-r from-red-500 to-orange-500 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all transform hover:scale-105"
                   >
                       <LogoutIcon className="w-5 h-5" />
                       <span>लॉगआउट</span>
+                  </button>
+                  <button
+                      onClick={toggleDarkMode}
+                      aria-label={isDarkMode ? "लाइट मोड" : "डार्क मोड"}
+                      className="flex items-center gap-2 bg-gradient-to-r from-slate-700 to-slate-900 dark:from-amber-400 dark:to-orange-500 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all transform hover:scale-105"
+                  >
+                      {isDarkMode ? <SunIcon className="w-5 h-5"/> : <MoonIcon className="w-5 h-5"/>}
+                      <span>{isDarkMode ? 'Light' : 'Dark'}</span>
                   </button>
               </div>
               
