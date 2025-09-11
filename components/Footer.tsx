@@ -77,7 +77,7 @@ const BottomNavBar: React.FC<BottomNavBarProps> = ({ activeIndex, setActiveIndex
                             className={isActive ? 'text-slate-800 dark:text-emerald-200' : 'text-slate-500 dark:text-slate-400'} 
                         />
                     </div>
-                    <span className={`transition-all duration-300 font-medium ${isActive ? 'text-slate-800 dark:text-emerald-200 font-bold text-sm' : 'text-slate-500 dark:text-slate-400 text-xs'}`}>
+                    <span className={`transition-all duration-300 ${isActive ? 'font-bold text-sm text-slate-800 dark:text-emerald-200' : 'font-medium text-xs text-slate-500 dark:text-slate-400'}`}>
                         {item.label}
                     </span>
                 </button>
