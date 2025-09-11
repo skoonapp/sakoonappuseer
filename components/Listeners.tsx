@@ -110,7 +110,7 @@ const PlansView: React.FC<PlansViewProps> = ({ currentUser, wallet, onPurchase, 
                                   className={`w-full text-white font-bold py-2 px-3 rounded-lg transition-colors shadow-md text-base mt-3 ${
                                     isLoadingThisPlan
                                       ? 'bg-amber-500 cursor-wait'
-                                      : `bg-indigo-600 hover:bg-indigo-700 ${loadingPlan ? 'cursor-not-allowed opacity-70' : ''}`
+                                      : `bg-indigo-600 hover:bg-indigo-700 ${loadingPlan ? 'cursor-not-allowed' : ''}`
                                   }`}
                                 >
                                   {isLoadingThisPlan ? 'प्रोसेसिंग...' : `₹${option.price} Buy`}

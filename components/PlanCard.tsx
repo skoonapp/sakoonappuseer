@@ -97,7 +97,7 @@ const PlanCard: React.FC<PlanCardProps> = ({ tierName, callPlan, chatPlan, isPop
                 className={`w-full mt-auto text-white font-bold py-2 text-base rounded-lg transition-colors shadow-md ${
                     isLoadingCallPlan
                     ? 'bg-amber-500 cursor-wait'
-                    : `bg-cyan-600 hover:bg-cyan-700 dark:bg-cyan-500 dark:hover:bg-cyan-400 ${loadingPlan ? 'cursor-not-allowed opacity-70' : ''}`
+                    : `bg-cyan-600 hover:bg-cyan-700 dark:bg-cyan-500 dark:hover:bg-cyan-400 ${loadingPlan ? 'cursor-not-allowed' : ''}`
                 }`}
               >
                 {isLoadingCallPlan ? 'प्रोसेसिंग...' : `₹${callPlan.price} खरीदें`}
@@ -123,7 +123,7 @@ const PlanCard: React.FC<PlanCardProps> = ({ tierName, callPlan, chatPlan, isPop
                 className={`w-full mt-auto text-white font-bold py-2 text-base rounded-lg transition-colors shadow-md ${
                     isLoadingChatPlan
                     ? 'bg-amber-500 cursor-wait'
-                    : `bg-teal-500 hover:bg-teal-600 dark:bg-teal-600 dark:hover:bg-teal-500 ${loadingPlan ? 'cursor-not-allowed opacity-70' : ''}`
+                    : `bg-teal-500 hover:bg-teal-600 dark:bg-teal-600 dark:hover:bg-teal-500 ${loadingPlan ? 'cursor-not-allowed' : ''}`
                 }`}
               >
                 {isLoadingChatPlan ? 'प्रोसेसिंग...' : `₹${chatPlan.price} खरीदें`}
