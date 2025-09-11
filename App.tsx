@@ -29,7 +29,6 @@ const AICompanion = lazy(() => import('./components/AICompanion'));
 const TermsAndConditions = lazy(() => import('./components/TermsAndConditions'));
 const PrivacyPolicy = lazy(() => import('./components/PrivacyPolicy'));
 const CancellationRefundPolicy = lazy(() => import('./components/CancellationRefundPolicy'));
-const Wallet = lazy(() => import('./components/Wallet'));
 
 // --- Icons for Install Banner ---
 const InstallIcon: React.FC<{ className?: string }> = ({ className }) => (
@@ -60,8 +59,6 @@ const App: React.FC = () => {
     const [showAICompanion, setShowAICompanion] = useState(false);
     const [showPolicy, setShowPolicy] = useState<'terms' | 'privacy' | 'cancellation' | null>(null);
     const [showRechargeModal, setShowRechargeModal] = useState(false);
-    const [showWallet, setShowWallet] = useState(false);
-    const [initialWalletTab, setInitialWalletTab] = useState<'recharge' | 'usage'>('recharge');
 
     // --- Centralized Payment State ---
     const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
@@ -390,15 +387,6 @@ const App: React.FC = () => {
         }
         setActiveChatSession(null);
     }, [user, activeChatSession]);
-    
-    const handleWalletOpen = useCallback(() => {
-        setShowWallet(true);
-    }, []);
-
-    const handleNavigateHome = useCallback(() => {
-        setShowWallet(false);
-        navigateTo(0);
-    }, [navigateTo]);
 
     // --- Centralized Purchase Handler ---
     const handlePurchase = async (plan: Plan | { tokens: number; price: number }) => {
@@ -554,7 +542,6 @@ const App: React.FC = () => {
             <AICompanionButton onClick={() => setShowAICompanion(true)} />
             
             <Suspense fallback={<div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center"><ViewLoader /></div>}>
-                {showWallet && user && <Wallet user={user} wallet={wallet} onClose={() => setShowWallet(false)} onNavigateHome={handleNavigateHome} onPurchase={handlePurchase} loadingPlan={loadingPlan} />}
                 {showAICompanion && <AICompanion user={user} onClose={() => setShowAICompanion(false)} onNavigateToServices={() => { navigateTo(1); setShowAICompanion(false); }} />}
                 {showPolicy === 'terms' && <TermsAndConditions onClose={() => setShowPolicy(null)} />}
                 {showPolicy === 'privacy' && <PrivacyPolicy onClose={() => setShowPolicy(null)} />}
