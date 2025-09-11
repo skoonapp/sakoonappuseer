@@ -89,6 +89,7 @@ const PlansView: React.FC<PlansViewProps> = ({ currentUser, wallet, onPurchase, 
                         const popularContainerStyles = isPopular
                             ? 'bg-gradient-to-br from-cyan-50 to-blue-200 dark:from-cyan-950/60 dark:to-blue-950/60 scale-105 z-10'
                             : 'bg-white dark:bg-slate-900';
+                        const isLoadingThisPlan = loadingPlan === `mt_${option.tokens}`;
 
                         return (
                           <div key={option.tokens} className={`relative ${popularContainerStyles} p-3 flex flex-col items-center justify-between transition-all hover:shadow-lg hover:-translate-y-1 min-h-[145px]`}>
@@ -104,13 +105,16 @@ const PlansView: React.FC<PlansViewProps> = ({ currentUser, wallet, onPurchase, 
                                   </div>
                                   <p className="text-sm font-semibold text-slate-600 dark:text-slate-400">Money Token</p>
                               </div>
-                              <button 
-                                  onClick={() => onPurchase({ tokens: option.tokens, price: option.price })}
-                                  disabled={loadingPlan !== null}
-                                  className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-3 rounded-lg transition-colors shadow-md disabled:bg-slate-400 disabled:cursor-not-allowed text-base mt-3"
-                              >
-                                  {loadingPlan === `mt_${option.tokens}` ? 'प्रोसेसिंग...' : `₹${option.price} Buy`}
-                              </button>
+                              <button
+                                  onClick={() => !loadingPlan && onPurchase({ tokens: option.tokens, price: option.price })}
+                                  className={`w-full text-white font-bold py-2 px-3 rounded-lg transition-colors shadow-md text-base mt-3 ${
+                                    isLoadingThisPlan
+                                      ? 'bg-amber-500 cursor-wait'
+                                      : `bg-indigo-600 hover:bg-indigo-700 ${loadingPlan ? 'cursor-not-allowed opacity-70' : ''}`
+                                  }`}
+                                >
+                                  {isLoadingThisPlan ? 'प्रोसेसिंग...' : `₹${option.price} Buy`}
+                                </button>
                           </div>
                         )
                       })}

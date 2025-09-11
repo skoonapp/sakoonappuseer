@@ -59,7 +59,10 @@ const PlanCard: React.FC<PlanCardProps> = ({ tierName, callPlan, chatPlan, isPop
   
   const callPlanKey = `call_${callPlan.name}`;
   const chatPlanKey = `chat_${chatPlan.name}`;
-  const isAnyPlanLoading = loadingPlan !== null;
+
+  const isLoadingCallPlan = loadingPlan === callPlanKey;
+  const isLoadingChatPlan = loadingPlan === chatPlanKey;
+
 
   return (
     <div className={`relative ${popularContainerStyles} p-3 flex flex-col text-center items-center hover:-translate-y-1 transition-all duration-300 min-h-[160px]`}>
@@ -89,12 +92,15 @@ const PlanCard: React.FC<PlanCardProps> = ({ tierName, callPlan, chatPlan, isPop
                     </p>
                 </div>
             </div>
-            <button
-              onClick={() => onPurchase(callPlan)}
-              disabled={isAnyPlanLoading}
-              className="w-full mt-auto bg-cyan-600 hover:bg-cyan-700 dark:bg-cyan-500 dark:hover:bg-cyan-400 text-white font-bold py-2 text-base rounded-lg transition-colors shadow-md disabled:bg-slate-400 disabled:cursor-not-allowed"
-            >
-              {loadingPlan === callPlanKey ? 'प्रोसेसिंग...' : `₹${callPlan.price} खरीदें`}
+             <button
+                onClick={() => !loadingPlan && onPurchase(callPlan)}
+                className={`w-full mt-auto text-white font-bold py-2 text-base rounded-lg transition-colors shadow-md ${
+                    isLoadingCallPlan
+                    ? 'bg-amber-500 cursor-wait'
+                    : `bg-cyan-600 hover:bg-cyan-700 dark:bg-cyan-500 dark:hover:bg-cyan-400 ${loadingPlan ? 'cursor-not-allowed opacity-70' : ''}`
+                }`}
+              >
+                {isLoadingCallPlan ? 'प्रोसेसिंग...' : `₹${callPlan.price} खरीदें`}
             </button>
         </div>
 
@@ -113,11 +119,14 @@ const PlanCard: React.FC<PlanCardProps> = ({ tierName, callPlan, chatPlan, isPop
                 </div>
             </div>
             <button
-              onClick={() => onPurchase(chatPlan)}
-              disabled={isAnyPlanLoading}
-              className="w-full mt-auto bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 text-base rounded-lg transition-colors shadow-md disabled:bg-slate-400 disabled:cursor-not-allowed"
-            >
-              {loadingPlan === chatPlanKey ? 'प्रोसेसिंग...' : `₹${chatPlan.price} खरीदें`}
+                onClick={() => !loadingPlan && onPurchase(chatPlan)}
+                className={`w-full mt-auto text-white font-bold py-2 text-base rounded-lg transition-colors shadow-md ${
+                    isLoadingChatPlan
+                    ? 'bg-amber-500 cursor-wait'
+                    : `bg-teal-500 hover:bg-teal-600 dark:bg-teal-600 dark:hover:bg-teal-500 ${loadingPlan ? 'cursor-not-allowed opacity-70' : ''}`
+                }`}
+              >
+                {isLoadingChatPlan ? 'प्रोसेसिंग...' : `₹${chatPlan.price} खरीदें`}
             </button>
         </div>
       </div>
