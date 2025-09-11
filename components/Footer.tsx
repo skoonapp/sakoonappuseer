@@ -5,10 +5,10 @@ interface BottomNavBarProps {
   setActiveIndex: (index: number) => void;
 }
 
-// --- Icon components designed to match the user's provided image ---
+// --- Icon components updated to accept className and with new size ---
 
-const HomeIcon: React.FC<{ active: boolean }> = ({ active }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 mb-0.5" viewBox="0 0 24 24">
+const HomeIcon: React.FC<{ active: boolean; className?: string }> = ({ active, className }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className={`h-6 w-6 ${className}`} viewBox="0 0 24 24">
         {active ? (
             <path fill="currentColor" d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8h5z" />
         ) : (
@@ -17,8 +17,8 @@ const HomeIcon: React.FC<{ active: boolean }> = ({ active }) => (
     </svg>
 );
 
-const CallIcon: React.FC<{ active: boolean }> = ({ active }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 mb-0.5" viewBox="0 0 24 24">
+const CallIcon: React.FC<{ active: boolean; className?: string }> = ({ active, className }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className={`h-6 w-6 ${className}`} viewBox="0 0 24 24">
         {active ? (
             <path fill="currentColor" d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
         ) : (
@@ -27,18 +27,18 @@ const CallIcon: React.FC<{ active: boolean }> = ({ active }) => (
     </svg>
 );
 
-const ChatIcon: React.FC<{ active: boolean }> = ({ active }) => (
-     <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 mb-0.5" viewBox="0 0 24 24">
+const ChatIcon: React.FC<{ active: boolean; className?: string }> = ({ active, className }) => (
+     <svg xmlns="http://www.w3.org/2000/svg" className={`h-6 w-6 ${className}`} viewBox="0 0 24 24">
         {active ? (
-            <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c1.89 0 3.65-.53 5.15-1.45L22 22l-1.55-4.85A9.957 9.957 0 0 0 22 12C22 6.48 17.52 2 12 2z" />
+             <path fill="currentColor" d="M4 2h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2h-4l-4 4-4-4H4c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2zm3 5h10v2H7V7zm0 4h7v2H7v-2z" />
         ) : (
             <path fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
         )}
     </svg>
 );
 
-const ProfileIcon: React.FC<{ active: boolean }> = ({ active }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 mb-0.5" viewBox="0 0 24 24">
+const ProfileIcon: React.FC<{ active: boolean; className?: string }> = ({ active, className }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className={`h-6 w-6 ${className}`} viewBox="0 0 24 24">
         {active ? (
             <path fill="currentColor" d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
         ) : (
@@ -57,25 +57,29 @@ const BottomNavBar: React.FC<BottomNavBarProps> = ({ activeIndex, setActiveIndex
   ];
 
   return (
-    <footer className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white to-cyan-50 dark:from-slate-950 dark:to-cyan-950/40 backdrop-blur-sm border-t border-cyan-100 dark:border-cyan-900/50 z-40">
+    <footer className="absolute bottom-0 left-0 right-0 h-16 bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 z-40">
       <div className="h-full flex justify-around items-center">
         {navItems.map(item => {
             const isActive = activeIndex === item.index;
             const Icon = item.icon;
-            const textClasses = isActive 
-              ? 'text-cyan-600 dark:text-cyan-400 font-bold' 
-              : 'text-slate-500 dark:text-slate-400 font-medium';
             
             return (
                  <button 
                     key={item.index}
                     onClick={() => setActiveIndex(item.index)} 
-                    className={`relative flex-1 flex flex-col items-center justify-center h-full transition-colors duration-200 pt-1 ${textClasses}`}
+                    className="relative flex-1 flex flex-col items-center justify-center h-full transition-colors duration-200 focus:outline-none"
                     aria-label={`Go to ${item.label} page`}
                     aria-current={isActive ? 'page' : undefined}
                 >
-                    <Icon active={isActive} />
-                    <span className={`text-sm`}>{item.label}</span>
+                    <div className={`transition-all duration-300 rounded-full flex items-center justify-center mb-0.5 ${isActive ? 'bg-emerald-100 dark:bg-emerald-500/20 px-6 py-1.5' : 'px-6 py-1.5'}`}>
+                        <Icon 
+                            active={isActive} 
+                            className={isActive ? 'text-slate-800 dark:text-emerald-200' : 'text-slate-500 dark:text-slate-400'} 
+                        />
+                    </div>
+                    <span className={`transition-all duration-300 font-medium ${isActive ? 'text-slate-800 dark:text-emerald-200 font-bold text-sm' : 'text-slate-500 dark:text-slate-400 text-xs'}`}>
+                        {item.label}
+                    </span>
                 </button>
             )
         })}
