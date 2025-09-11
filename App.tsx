@@ -215,6 +215,38 @@ const App: React.FC = () => {
         };
     }, [user]);
 
+    // Proactively request microphone permission on app initialization
+    useEffect(() => {
+        const requestMicrophonePermission = async () => {
+            // Ensure there's a user and we haven't asked in this session
+            if (user && !sessionStorage.getItem('micPermissionRequested')) {
+                sessionStorage.setItem('micPermissionRequested', 'true');
+                try {
+                    // Use the Permissions API to check the state first
+                    if (navigator.permissions) {
+                        const permissionStatus = await navigator.permissions.query({ name: 'microphone' as PermissionName });
+                        // Only prompt if the user hasn't made a choice yet
+                        if (permissionStatus.state === 'prompt') {
+                            // This triggers the native browser permission prompt.
+                            // We immediately stop the stream as we only need to trigger the request.
+                            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                            stream.getTracks().forEach(track => track.stop());
+                        }
+                    }
+                } catch (error) {
+                    // This might fail if the API is not supported or for other reasons.
+                    // We fail silently as the permission will be requested in context (during a call) anyway.
+                    console.warn('Could not proactively request microphone permission:', error);
+                }
+            }
+        };
+
+        // Delay the request slightly to make the app load feel smoother
+        const timer = setTimeout(requestMicrophonePermission, 2500);
+
+        return () => clearTimeout(timer);
+    }, [user]);
+
 
     // --- Handlers ---
     
